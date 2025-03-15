@@ -178,9 +178,6 @@ const forbiddenWords = [
             if (!generatedResponse) {
                 addMessageToChat('ai', "🟥 Les serveurs de Cosmos rencontrent des difficultés, veuillez réessayer plus tard.");
             }
-        })
-        .catch(() => {
-            addMessageToChat('ai', "🟥 Les serveurs de Cosmos rencontrent des difficultés, veuillez réessayer plus tard.");
         });
     }
 }
