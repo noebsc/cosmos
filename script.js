@@ -125,65 +125,61 @@ const forbiddenWords = [
     // Vérifier si le message contient des mots interdits
     const containsForbiddenWord = forbiddenWords.some(word => message.includes(word));
     if (containsForbiddenWord) {
-      alert('Votre message contient un mot interdit. Veillez à votre langage.');
+        alert('Votre message contient un mot interdit. Veillez à votre langage.');
+        return;
     }
   
     if (message) {
-      addMessageToChat('user', message);
-      userInput.value = '';
+        addMessageToChat('user', message);
+        userInput.value = '';
   
-      // Construire l'historique de la discussion
-      const chatBox = document.getElementById('chat-box');
-      const previousMessages = Array.from(chatBox.children);
-      let history = "Ceci est notre premier message";
+        const chatBox = document.getElementById('chat-box');
+        const previousMessages = Array.from(chatBox.children);
+        let history = "Ceci est notre premier message";
   
-      if (previousMessages.length > 0) {
-        history = "Historique de notre discussion:";
-        previousMessages.forEach((msgElement, index) => {
-          const sender = msgElement.classList.contains('ai') ? 'Toi' : 'Moi';
-          const msgContent = msgElement.textContent.trim();
-          history += ` -${sender}: ${msgContent}`;
-        });
-      }
+        if (previousMessages.length > 0) {
+            history = "Historique de notre discussion:";
+            previousMessages.forEach((msgElement) => {
+                const sender = msgElement.classList.contains('ai') ? 'Toi' : 'Moi';
+                const msgContent = msgElement.textContent.trim();
+                history += ` -${sender}: ${msgContent}`;
+            });
+        }
   
-      // Construire le message à envoyer à l'IA - Début de requête envoyée à COSMOS AI.
-      const aiMessage = `Tu es une IA nommée Cosmos, créée par Noé Besançon en 2025. Réponds uniquement en français sauf si je te demande explicitement de parler une autre langue dans ma demande. Voici l'historique de notre discussion suivie de ma demande, pas besoin de rappeler notre ancienne discussion, utilise l'historique de notre discussion si besoin mais tu n'as pas besoin de tout le temps l'utiliser. Essaie de répondre simplement et avec seulement la réponse à ma demande. ${history}. Voici ma demande: ${message}`;
+        const aiMessage = `Tu es une IA nommée Cosmos, créée par Noé Besançon en 2025. Réponds uniquement en français sauf si je te demande explicitement de parler une autre langue dans ma demande. Voici l'historique de notre discussion suivie de ma demande, pas besoin de rappeler notre ancienne discussion, utilise l'historique de notre discussion si besoin mais tu n'as pas besoin de tout le temps l'utiliser. Essaie de répondre simplement et avec seulement la réponse à ma demande. ${history}. Voici ma demande: ${message}`;
   
-      // Appel à l'API IA pour générer la réponse - Envoi de la demande au serveur de Cosmos AI via une requête Groq.
-      fetch('https://api.groq.com/openai/v1/chat/completions', { // Serveur Cosmos public, via Groq pour une requête rapide
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer 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',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: "llama-3.3-70b-specdec", // Utilisation du modèle llama70b en priorité pour une première analyse textuelle
-          messages: [{ role: "user", content: aiMessage }],
-          max_tokens: 6000,
-          stream: false
+        fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer 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',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: "llama-3.3-70b-specdec",
+                messages: [{ role: "user", content: aiMessage }],
+                max_tokens: 6000,
+                stream: false
+            })
         })
-      })
-      .then(response => response.json())
-      .then(data => {
-        // Supprimer le contenu entre <think> et </think>
-        let generatedResponse = data.choices[0].message.content;
-        generatedResponse = generatedResponse.replace(/<think>[\s\S]*?<\/think>/g, '');
+        .then(response => response.json())
+        .then(data => {
+            let generatedResponse = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content ? data.choices[0].message.content : "";
+            generatedResponse = generatedResponse.replace(/<think>[\s\S]*?<\/think>/g, '').replace(/\n/g, '<br>');
   
-        // Remplacer les sauts de ligne par des balises <br>
-        generatedResponse = generatedResponse.replace(/\n/g, '<br>');
-  
-        // Ajouter la réponse de l'IA à la discussion
-        addMessageToChat('ai', generatedResponse);
-  
-        // Sauvegarder la discussion
-        const chatName = prompt("Nommez cette discussion :", `Discussion ${historyList.children.length + 1}`);
-        saveChat(chatName);
-      })
-      .catch(error => {
-        addMessageToChat('ai', "🟥 Les serveurs de Cosmos rencontrent des difficultés, veuillez réessayer plus tard.");
-      });
+            if (generatedResponse.trim()) {
+                addMessageToChat('ai', generatedResponse);
+                const chatName = prompt("Nommez cette discussion :", `Discussion ${historyList.children.length + 1}`);
+                saveChat(chatName);
+            } else {
+                throw new Error("Réponse vide ou invalide");
+            }
+        })
+        .catch(error => {
+            addMessageToChat('ai', "🟥 Les serveurs de Cosmos rencontrent des difficultés, veuillez réessayer plus tard.");
+        });
     }
-  }
+}
+
   
 
   function addMessageToChat(sender, message) {
