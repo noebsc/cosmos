@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="icone.png">
+  <title>COSMOS - Discussion</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-html.min.js"></script>
+  
+</head>
+</head>
+<body>
+  <button id="newChatButton" class="new-chat-button">+</button>
+  <button id="settings-button" class="settings-button">⚙️</button>
+  <div class="container">
+    <div class="chat-container">
+      <div class="chat-box" id="chat-box">
+        <!-- Les messages apparaîtront ici -->
+      </div>
+      <div class="input-container">
+        <textarea id="user-input" placeholder="Écrivez votre message ici..."></textarea>
+        <button id="send-button">Envoyer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pop-up pour les paramètres -->
+  <div id="settings-popup" class="settings-popup">
+    <div class="settings-content">
+      <span class="close-button">&times;</span>
+      <h2>Paramètres</h2>
+      <div class="theme-options">
+        <label for="theme-select">Choisir un thème :</label>
+        <select id="theme-select">
+          <option value="light">Clair</option>
+          <option value="dark">Sombre</option>
+          <option value="blue">Bleu</option>
+          <option value="green">Vert</option>
+          <option value="orange">Orange</option>
+          <option value="purple">Violet</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="copyright-container">
+    <div class="copyright-text">© 2025 Noé BESANÇON / Cosmos - Tous droits réservés</div>
+    <div class="shine-effect"></div>
+  </div>
+  <img src="icone.png" alt="Cosmos" width="40" height="40" class="app-icon">
+  <div class="title-shine">
+    <h1 class="app-title">Cosmos</h1>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
