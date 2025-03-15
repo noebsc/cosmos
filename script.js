@@ -163,10 +163,10 @@ const forbiddenWords = [
         })
         .then(response => response.json())
         .then(data => {
-            let generatedResponse = data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content ? data.choices[0].message.content : "";
-            generatedResponse = generatedResponse.replace(/<think>[\s\S]*?<\/think>/g, '').replace(/\n/g, '<br>');
-  
-            if (generatedResponse.trim()) {
+            let generatedResponse = data.choices?.[0]?.message?.content?.trim() || "";
+
+            if (generatedResponse) {
+                generatedResponse = generatedResponse.replace(/<think>[\s\S]*?<\/think>/g, '').replace(/\n/g, '<br>');
                 addMessageToChat('ai', generatedResponse);
                 const chatName = prompt("Nommez cette discussion :", `Discussion ${historyList.children.length + 1}`);
                 saveChat(chatName);
@@ -174,12 +174,14 @@ const forbiddenWords = [
                 throw new Error("Réponse vide ou invalide");
             }
         })
-        .catch(error => {
-            addMessageToChat('ai', "🟥 Les serveurs de Cosmos rencontrent des difficultés, veuillez réessayer plus tard.");
+        .catch(() => {
+            const lastMessages = document.querySelectorAll('.chat-message.ai');
+            if (lastMessages.length === 0) {
+                addMessageToChat('ai', "🟥 Les serveurs de Cosmos rencontrent des difficultés, veuillez réessayer plus tard.");
+            }
         });
     }
 }
-
   
 
   function addMessageToChat(sender, message) {
