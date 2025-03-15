@@ -18,6 +18,7 @@ Développé par Noé, étudiant en ingénierie et passionné de cybersécurité,
 ## 🌍 Accès à Cosmos
 
 Accédez à Cosmos en ligne sur **[https://noebsc.github.io/cosmos/](https://noebsc.github.io/cosmos/)**.
+Note: Il est recommandé d'accéder à Cosmos depuis un ordinateur; la prise en charge sur téléphone n'est pas complète.
 
 ## 📽️ Démonstration
 
