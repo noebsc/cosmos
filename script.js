@@ -146,18 +146,18 @@ const forbiddenWords = [
         });
       }
   
-      // Construire le message à envoyer à l'IA
+      // Construire le message à envoyer à l'IA - Début de requête envoyée à COSMOS AI.
       const aiMessage = `Tu es une IA nommée Cosmos, créée par Noé Besançon en 2025. Réponds uniquement en français sauf si je te demande explicitement de parler une autre langue dans ma demande. Voici l'historique de notre discussion suivie de ma demande, pas besoin de rappeler notre ancienne discussion, utilise l'historique de notre discussion si besoin mais tu n'as pas besoin de tout le temps l'utiliser. Essaie de répondre simplement et avec seulement la réponse à ma demande. ${history}. Voici ma demande: ${message}`;
   
-      // Appel à l'API IA pour générer la réponse
-      fetch('https://api.groq.com/openai/v1/chat/completions', {
+      // Appel à l'API IA pour générer la réponse - Envoi de la demande au serveur de Cosmos AI via une requête Groq.
+      fetch('https://api.groq.com/openai/v1/chat/completions', { // Serveur Cosmos public, via Groq pour une requête rapide
         method: 'POST',
         headers: {
           'Authorization': 'Bearer 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',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          model: "llama-3.3-70b-specdec",
+          model: "llama-3.3-70b-specdec", // Utilisation du modèle llama70b en priorité pour une première analyse textuelle
           messages: [{ role: "user", content: aiMessage }],
           max_tokens: 6000,
           stream: false
