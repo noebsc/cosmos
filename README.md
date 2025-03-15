@@ -15,17 +15,6 @@ Bienvenue dans **Cosmos**, une intelligence artificielle avancée conçue pour o
 - Cosmos est une intelligence artificielle avancée créée à partir de plusieurs modèles IA, combinant les modèles de ChatGPT, DeepSeek, Llama, Mistral AI et pleins d'autres pour offrir la meilleure expérience utilisateur possible.
 Développé par Noé, étudiant en ingénierie et passionné de cybersécurité, Cosmos est accessible directement en ligne et offre une expérience utilisateur moderne et performante.
 
-🔗 Accédez à Cosmos ici : https://noebsc.github.io/cosmos/
-
-🚀 Fonctionnalités principales :
-✅ Discussion instantanée avec une IA optimisée
-✅ Interface moderne et intuitive
-✅ Disponible directement via GitHub Pages
-
-📢 N'oubliez pas de liker, commenter et partager cette vidéo !
-
-#IA #AssistantIA #Cosmos #Cybersecurite #Innovation #Noé
-
 ## 🌍 Accès à Cosmos
 
 Accédez à Cosmos en ligne sur **[https://noebsc.github.io/cosmos/](https://noebsc.github.io/cosmos/)**.
