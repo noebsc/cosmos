@@ -18,7 +18,7 @@ Accédez à Cosmos en ligne sur **[https://noebsc.github.io/cosmos/](https://noe
 
 ## 📽️ Démonstration
 
-[![Watch the video](thumbnail.png)](https://youtu.be/1-l5iJ9wJD0)
+[![Watch the video](COSMOS.png)](https://youtu.be/1-l5iJ9wJD0)
 
 Regardez notre vidéo de démonstration pour découvrir Cosmos en action !
 
