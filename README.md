@@ -28,20 +28,12 @@ Ce projet est sous une licence propriétaire stricte. Toute modification, distri
 
 Toute violation de ces termes pourra entraîner des actions légales.
 
-## ✨ Contribuer
-
-Vous souhaitez améliorer Cosmos ? N'hésitez pas à :
-
-1. Forker le projet
-2. Créer une branche (`git checkout -b feature-nouvelle-fonctionnalite`)
-3. Soumettre une Pull Request
-
 ## 📬 Contact
 
 💡 Développé par **Noé** - Passionné de cybersécurité et ingénierie.
 
-📧 Contact : [votre.email@example.com](mailto:votre.email@example.com)  
-🔗 GitHub : [github.com/votre-utilisateur](https://github.com/votre-utilisateur)
+📧 Contact : [besancon.noe@gmail.com](mailto:besancon.noe@gmail.com)  
+🔗 GitHub : [github.com/noebsc](https://github.com/noebsc)
 
 ---
 
