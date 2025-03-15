@@ -170,15 +170,17 @@ const forbiddenWords = [
                 addMessageToChat('ai', generatedResponse);
                 const chatName = prompt("Nommez cette discussion :", `Discussion ${historyList.children.length + 1}`);
                 saveChat(chatName);
-            } else {
-                throw new Error("Réponse vide ou invalide");
+            }
+
+            return generatedResponse; // Retourner la réponse pour le prochain .then()
+        })
+        .then(generatedResponse => {
+            if (!generatedResponse) {
+                addMessageToChat('ai', "🟥 Les serveurs de Cosmos rencontrent des difficultés, veuillez réessayer plus tard.");
             }
         })
         .catch(() => {
-            const lastMessages = document.querySelectorAll('.chat-message.ai');
-            if (lastMessages.length === 0) {
-                addMessageToChat('ai', "🟥 Les serveurs de Cosmos rencontrent des difficultés, veuillez réessayer plus tard.");
-            }
+            addMessageToChat('ai', "🟥 Les serveurs de Cosmos rencontrent des difficultés, veuillez réessayer plus tard.");
         });
     }
 }
