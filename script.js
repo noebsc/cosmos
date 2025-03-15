@@ -180,7 +180,7 @@ const forbiddenWords = [
         saveChat(chatName);
       })
       .catch(error => {
-        console.error('Erreur:', error);
+        addMessageToChat('ai', "🟥 Les serveurs de Cosmos rencontrent des difficultés, veuillez réessayer plus tard.");
       });
     }
   }
