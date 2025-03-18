@@ -123,7 +123,10 @@ const forbiddenWords = [
     const message = userInput.value.trim();
   
     // Vérifier si le message contient des mots interdits
-    const containsForbiddenWord = forbiddenWords.some(word => message.includes(word));
+    const containsForbiddenWord = forbiddenWords.some(word => {
+      const regex = new RegExp(`\\b${word}\\b`, 'i'); // 'i' pour ignorer la casse
+      return regex.test(message);
+    });
     if (containsForbiddenWord) {
         alert('Votre message contient un mot interdit. Veillez à votre langage.');
     }
