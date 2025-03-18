@@ -126,7 +126,6 @@ const forbiddenWords = [
     const containsForbiddenWord = forbiddenWords.some(word => message.includes(word));
     if (containsForbiddenWord) {
         alert('Votre message contient un mot interdit. Veillez à votre langage.');
-        return;
     }
   
     if (message) {
