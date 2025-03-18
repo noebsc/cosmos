@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -134,5 +134,37 @@
             </div>
         </div>
     </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyAF2d6Z6Z...",
+            authDomain: "cosmos-fr.firebaseapp.com",
+            projectId: "cosmos-fr",
+            storageBucket: "cosmos-fr.appspot.com",
+            messagingSenderId: "480509265804",
+            appId: "1:480509265804:web:e55805b53401a209a4f8a9",
+            measurementId: "G-VKK7HMCCJS"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.getElementById('login-tab').addEventListener('click', () => {
+            document.getElementById('login-tab').classList.add('active');
+            document.getElementById('signup-tab').classList.remove('active');
+            document.getElementById('login-form-container').classList.add('active');
+            document.getElementById('signup-form-container').classList.remove('active');
+        });
+
+        document.getElementById('signup-tab').addEventListener('click', () => {
+            document.getElementById('signup-tab').classList.add('active');
+            document.getElementById('login-tab').classList.remove('active');
+            document.getElementById('signup-form-container').classList.add('active');
+            document.getElementById('login-form-container').classList.remove('active');
+        });
+    </script>
 </body>
 </html>
