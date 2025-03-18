@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion - Cosmos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="auth-container">
+    <form id="login-form">
+      <h2>Se connecter</h2>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Mot de passe" required>
+      <button type="submit">Se connecter</button>
+    </form>
+
+    <form id="signup-form">
+      <h2>S'inscrire</h2>
+      <input type="email" id="signup-email" placeholder="Email" required>
+      <input type="password" id="signup-password" placeholder="Mot de passe" required>
+      <button type="submit">S'inscrire</button>
+    </form>
+  </div>
+  <script type="module">
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+
+    const auth = getAuth();
+
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          console.log('Logged in!', userCredential.user);
+          window.location.href = 'index.html'; // Rediriger vers la page principale après la connexion
+        })
+        .catch((error) => {
+          console.error('Error logging in:', error);
+        });
+    });
+
+    document.getElementById('signup-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          console.log('Signed up!', userCredential.user);
+          window.location.href = 'index.html'; // Rediriger vers la page principale après l'inscription
+        })
+        .catch((error) => {
+          console.error('Error signing up:', error);
+        });
+    });
+  </script>
+</body>
+</html>
