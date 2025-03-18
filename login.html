@@ -25,52 +25,84 @@
 
   <!-- Script Firebase -->
   <script type="module">
-    // Import the functions you need from the SDKs you need
+    // Import des SDK Firebase nécessaires
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
-
-    // Your web app's Firebase configuration
+    
+    // Configuration Firebase - Ces valeurs sont limitées par restrictions Firebase
     const firebaseConfig = {
-        apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-        authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-        projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-        storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-        messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-        appId: process.env.REACT_APP_FIREBASE_APP_ID,
-        measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
-    };
-
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
+};
+    
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
     const auth = getAuth(app);
-
+    
+    // Fonction de connexion
     document.getElementById('login-form').addEventListener('submit', (e) => {
       e.preventDefault();
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          console.log('Logged in!', userCredential.user);
-          window.location.href = 'index.html'; // Rediriger vers la page principale après la connexion
+          console.log('Connecté!', userCredential.user);
+          // Redirection ou mise à jour de l'interface
+          document.getElementById('login-status').textContent = "Connecté";
+          document.getElementById('protected-content').style.display = "block";
         })
         .catch((error) => {
-          console.error('Error logging in:', error);
+          console.error('Erreur de connexion:', error);
+          document.getElementById('login-error').textContent = `Erreur: ${error.message}`;
         });
     });
-
+    
+    // Fonction d'inscription
     document.getElementById('signup-form').addEventListener('submit', (e) => {
       e.preventDefault();
       const email = document.getElementById('signup-email').value;
       const password = document.getElementById('signup-password').value;
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          console.log('Signed up!', userCredential.user);
-          window.location.href = 'index.html'; // Rediriger vers la page principale après l'inscription
+          console.log('Inscrit!', userCredential.user);
+          document.getElementById('signup-status').textContent = "Compte créé avec succès";
         })
         .catch((error) => {
-          console.error('Error signing up:', error);
+          console.error('Erreur d\'inscription:', error);
+          document.getElementById('signup-error').textContent = `Erreur: ${error.message}`;
         });
     });
-  </script>
+    
+    // Vérifier l'état d'authentification
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        console.log('Utilisateur connecté:', user);
+        document.getElementById('login-container').style.display = "none";
+        document.getElementById('logout-container').style.display = "block";
+        document.getElementById('protected-content').style.display = "block";
+      } else {
+        console.log("Aucun utilisateur connecté");
+        document.getElementById('login-container').style.display = "block";
+        document.getElementById('logout-container').style.display = "none";
+        document.getElementById('protected-content').style.display = "none";
+      }
+    });
+    
+    // Fonction de déconnexion
+    document.getElementById('logout-button').addEventListener('click', () => {
+      auth.signOut().then(() => {
+        console.log('Déconnecté');
+      }).catch((error) => {
+        console.error('Erreur de déconnexion:', error);
+      });
+    });
+</script>
 </body>
 </html>
