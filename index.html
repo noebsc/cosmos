@@ -12,10 +12,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-html.min.js"></script>
-  
-</head>
 </head>
 <body>
+  <div id="auth-container">
+    <form id="login-form">
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Mot de passe" required>
+      <button type="submit">Se connecter</button>
+    </form>
+
+    <form id="signup-form">
+      <input type="email" id="signup-email" placeholder="Email" required>
+      <input type="password" id="signup-password" placeholder="Mot de passe" required>
+      <button type="submit">S'inscrire</button>
+    </form>
+  </div>
+
   <button id="newChatButton" class="new-chat-button">+</button>
   <button id="settings-button" class="settings-button">⚙️</button>
   <div class="container">
@@ -56,29 +68,74 @@
   <div class="title-shine">
     <h1 class="app-title">Cosmos</h1>
   </div>
-  <script src="script.js"></script>
+
+  <!-- Script Firebase -->
   <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyAF2d6Z6AGVpbs_MySepZ55zkSp4x5JmII",
-    authDomain: "cosmos-fr.firebaseapp.com",
-    projectId: "cosmos-fr",
-    storageBucket: "cosmos-fr.firebasestorage.app",
-    messagingSenderId: "480509265804",
-    appId: "1:480509265804:web:e55805b53401a209a4f8a9",
-    measurementId: "G-VKK7HMCCJS"
-  };
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAF2d6Z6AGVpbs_MySepZ55zkSp4x5JmII",
+      authDomain: "cosmos-fr.firebaseapp.com",
+      projectId: "cosmos-fr",
+      storageBucket: "cosmos-fr.firebasestorage.app",
+      messagingSenderId: "480509265804",
+      appId: "1:480509265804:web:e55805b53401a209a4f8a9",
+      measurementId: "G-VKK7HMCCJS"
+    };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const auth = getAuth(app);
-</script>
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
 
+    // Login
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          console.log('Logged in!', userCredential.user);
+          // Rediriger ou mettre à jour l'interface utilisateur
+        })
+        .catch((error) => {
+          console.error('Error logging in:', error);
+        });
+    });
+
+    // Sign Up
+    document.getElementById('signup-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          console.log('Signed up!', userCredential.user);
+          // Rediriger ou mettre à jour l'interface utilisateur
+        })
+        .catch((error) => {
+          console.error('Error signing up:', error);
+        });
+    });
+
+    // Vérifier l'état d'authentification
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in
+        console.log('User is signed in:', user);
+        // Afficher le contenu protégé
+      } else {
+        // No user is signed in
+        window.location.href = 'login.html'; // Rediriger vers la page de connexion
+      }
+    });
+  </script>
+
+  <!-- Votre script.js -->
+  <script src="script.js"></script>
 </body>
 </html>
