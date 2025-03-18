@@ -67,16 +67,6 @@
             display: block;
         }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--primary-color);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
         label {
             display: block;
             margin-bottom: 8px;
@@ -109,34 +99,10 @@
         button:hover {
             background-color: #5b6eae;
         }
-
-        .error-message {
-            color: #e74c3c;
-            margin-top: 5px;
-            font-size: 14px;
-        }
-
-        .success-message {
-            color: #2ecc71;
-            margin-top: 5px;
-            font-size: 14px;
-        }
-
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .logo img {
-            height: 60px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">
-            <h1>Cosmos</h1>
-        </div>
         <div class="login-card">
             <div class="tabs">
                 <div class="tab active" id="login-tab">Connexion</div>
@@ -145,14 +111,10 @@
             
             <div class="form-container active" id="login-form-container">
                 <form id="login-form">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Mot de passe</label>
-                        <input type="password" id="password" required>
-                    </div>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" required>
                     <div class="error-message" id="login-error"></div>
                     <button type="submit">Se connecter</button>
                 </form>
@@ -160,163 +122,17 @@
             
             <div class="form-container" id="signup-form-container">
                 <form id="signup-form">
-                    <div class="form-group">
-                        <label for="signup-email">Email</label>
-                        <input type="email" id="signup-email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="signup-password">Mot de passe</label>
-                        <input type="password" id="signup-password" required minlength="6">
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm-password">Confirmer le mot de passe</label>
-                        <input type="password" id="confirm-password" required minlength="6">
-                    </div>
+                    <label for="signup-email">Email</label>
+                    <input type="email" id="signup-email" required>
+                    <label for="signup-password">Mot de passe</label>
+                    <input type="password" id="signup-password" required minlength="6">
+                    <label for="confirm-password">Confirmer le mot de passe</label>
+                    <input type="password" id="confirm-password" required minlength="6">
                     <div class="error-message" id="signup-error"></div>
-                    <div class="success-message" id="signup-success"></div>
                     <button type="submit">S'inscrire</button>
                 </form>
             </div>
         </div>
     </div>
-
-    <!-- Firebase SDK -->
-    <script type="module">
-        // Import Firebase SDK
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
-
-        // Configuration Firebase (remplacez par vos propres valeurs)
-         const firebaseConfig = {
-          apiKey: "AIzaSyAF2d6Z6AGVpbs_MySepZ55zkSp4x5JmII",
-          authDomain: "cosmos-fr.firebaseapp.com",
-          projectId: "cosmos-fr",
-          storageBucket: "cosmos-fr.firebasestorage.app",
-          messagingSenderId: "480509265804",
-          appId: "1:480509265804:web:e55805b53401a209a4f8a9",
-          measurementId: "G-VKK7HMCCJS"
-        };
-
-        // Initialisation Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        // Navigation entre les onglets
-        const loginTab = document.getElementById('login-tab');
-        const signupTab = document.getElementById('signup-tab');
-        const loginFormContainer = document.getElementById('login-form-container');
-        const signupFormContainer = document.getElementById('signup-form-container');
-
-        loginTab.addEventListener('click', () => {
-            loginTab.classList.add('active');
-            signupTab.classList.remove('active');
-            loginFormContainer.classList.add('active');
-            signupFormContainer.classList.remove('active');
-        });
-
-        signupTab.addEventListener('click', () => {
-            signupTab.classList.add('active');
-            loginTab.classList.remove('active');
-            signupFormContainer.classList.add('active');
-            loginFormContainer.classList.remove('active');
-        });
-
-        // Connexion
-        document.getElementById('login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const errorElement = document.getElementById('login-error');
-            
-            errorElement.textContent = '';
-            
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    console.log('Connexion réussie!', userCredential.user);
-                    window.location.href = 'index.html'; // Redirection vers la page principale
-                })
-                .catch((error) => {
-                    console.error('Erreur de connexion:', error);
-                    let errorMessage;
-                    
-                    switch(error.code) {
-                        case 'auth/user-not-found':
-                            errorMessage = 'Aucun utilisateur trouvé avec cet email.';
-                            break;
-                        case 'auth/wrong-password':
-                            errorMessage = 'Mot de passe incorrect.';
-                            break;
-                        case 'auth/invalid-credential':
-                            errorMessage = 'Identifiants invalides.';
-                            break;
-                        case 'auth/too-many-requests':
-                            errorMessage = 'Trop de tentatives échouées. Veuillez réessayer plus tard.';
-                            break;
-                        default:
-                            errorMessage = 'Une erreur est survenue. Veuillez réessayer.';
-                    }
-                    
-                    errorElement.textContent = errorMessage;
-                });
-        });
-
-        // Inscription
-        document.getElementById('signup-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
-            const errorElement = document.getElementById('signup-error');
-            const successElement = document.getElementById('signup-success');
-            
-            errorElement.textContent = '';
-            successElement.textContent = '';
-            
-            if (password !== confirmPassword) {
-                errorElement.textContent = 'Les mots de passe ne correspondent pas.';
-                return;
-            }
-            
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    console.log('Inscription réussie!', userCredential.user);
-                    successElement.textContent = 'Inscription réussie! Vous pouvez maintenant vous connecter.';
-                    document.getElementById('signup-form').reset();
-                    
-                    // Rediriger vers l'onglet de connexion après 2 secondes
-                    setTimeout(() => {
-                        loginTab.click();
-                    }, 2000);
-                })
-                .catch((error) => {
-                    console.error('Erreur d\'inscription:', error);
-                    let errorMessage;
-                    
-                    switch(error.code) {
-                        case 'auth/email-already-in-use':
-                            errorMessage = 'Cet email est déjà utilisé.';
-                            break;
-                        case 'auth/invalid-email':
-                            errorMessage = 'Format d\'email invalide.';
-                            break;
-                        case 'auth/weak-password':
-                            errorMessage = 'Le mot de passe est trop faible. Utilisez au moins 6 caractères.';
-                            break;
-                        default:
-                            errorMessage = 'Une erreur est survenue. Veuillez réessayer.';
-                    }
-                    
-                    errorElement.textContent = errorMessage;
-                });
-        });
-
-        // Vérifier si l'utilisateur est déjà connecté
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                console.log('Utilisateur déjà connecté:', user);
-                window.location.href = 'index.html'; // Redirection vers la page principale
-            }
-        });
-    </script>
 </body>
 </html>
