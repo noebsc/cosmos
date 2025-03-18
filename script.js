@@ -254,6 +254,9 @@ window.addEventListener('load', () => {
   setTimeout(() => {
     document.body.classList.remove('fade-in');
   }, 500);
+  
+  // Vérification d'authentification
+  checkAuth();
 });
 
 document.getElementById('newChatButton').addEventListener('click', function() {
@@ -262,41 +265,37 @@ document.getElementById('newChatButton').addEventListener('click', function() {
   document.getElementById('user-input').focus();
 });
 
-// Firebase Authentication
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
-
-const auth = getAuth();
-
-document.getElementById('login-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      console.log('Logged in!', userCredential.user);
-    })
-    .catch((error) => {
-      console.error('Error logging in:', error);
+// Vérification d'authentification (utilise les fonctions Firebase déjà chargées)
+function checkAuth() {
+  // On récupère l'auth depuis la page principale qui a déjà chargé Firebase
+  const auth = window.firebase?.auth?.();
+  
+  if (auth) {
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+      }
     });
-});
-
-document.getElementById('signup-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const email = document.getElementById('signup-email').value;
-  const password = document.getElementById('signup-password').value;
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      console.log('Signed up!', userCredential.user);
-    })
-    .catch((error) => {
-      console.error('Error signing up:', error);
-    });
-});
-
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    console.log('User is signed in:', user);
   } else {
+    // Si Firebase n'est pas chargé, vérifier s'il y a un jeton dans le localStorage
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      window.location.href = 'login.html';
+    }
+  }
+}
+
+// Ajouter un bouton de déconnexion
+document.getElementById('logout-button')?.addEventListener('click', function() {
+  const auth = window.firebase?.auth?.();
+  if (auth) {
+    auth.signOut().then(() => {
+      window.location.href = 'login.html';
+    }).catch((error) => {
+      console.error('Erreur de déconnexion :', error);
+    });
+  } else {
+    localStorage.removeItem('authToken');
     window.location.href = 'login.html';
   }
 });
