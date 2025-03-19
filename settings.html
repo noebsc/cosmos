@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paramètres</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -37,18 +38,18 @@
 </head>
 <body>
     <div class="settings-container">
-        <h2>Paramètres</h2>
+        <h1>Paramètres</h1>
         <p id="user-email"></p>
         <p id="email-verified"></p>
         <button id="verify-email-button" style="display:none;">Vérifier l'email</button>
         <button id="logout-button">Déconnexion</button>
         
         <form id="reset-password-form">
-            <h3>Réinitialiser le mot de passe</h3>
+            <h2>Réinitialiser le mot de passe</h2>
             <input type="email" id="reset-email" placeholder="Email" required>
-            <button type="submit">Réinitialiser</button>
+            <button type="submit">Réinitialiser le mot de passe</button>
         </form>
-        
+
         <div class="theme-options">
             <label for="theme-select">Choisir un thème :</label>
             <select id="theme-select">
@@ -81,5 +82,10 @@
         window.firebase = { app: app, auth: () => auth };
     </script>
     <script type="module" src="auth.js"></script>
+    <script>
+        document.getElementById("theme-select").addEventListener("change", function() {
+            document.body.className = this.value + "-theme";
+        });
+    </script>
 </body>
 </html>
