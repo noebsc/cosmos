@@ -281,15 +281,15 @@ body {
 
   .new-chat-button {
     position: fixed;
-    bottom: 722px;
-    right: 80px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
+   bottom: 20px;
+   right: 20px;
+   width: 50px;
+   height: 50px;
+   border-radius: 50%;
+   border: none;
+   font-size: 24px;
+  cursor: pointer;
+   transition: background-color 0.3s, transform 0.3s;
   }
   .settings-button {
    position: fixed;
