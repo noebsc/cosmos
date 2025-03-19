@@ -1,97 +1,92 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paramètres</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .settings-container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 350px;
-        }
-        h2 {
-            text-align: center;
-        }
-        button, select, input {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .theme-options {
-            margin-top: 10px;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .settings-container {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 350px;
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      button,
+      select,
+      input {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      .theme-options {
+        margin-top: 10px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <img src="icone.png" alt="Cosmos" width="40" height="40" class="app-icon">
     <div class="title-shine">
       <h1 class="app-title">Cosmos</h1>
     </div>
     <div class="settings-container">
-        <h1>Paramètres</h1>
-        <p id="user-email"></p>
-        <p id="email-verified"></p>
-        <button id="verify-email-button" style="display:none;">Vérifier l'email</button>
-        <button id="logout-button">Déconnexion</button>
-        
-        <form id="reset-password-form">
-            <h2>Réinitialiser le mot de passe</h2>
-            <input type="email" id="reset-email" placeholder="Email" required>
-            <button type="submit">Réinitialiser le mot de passe</button>
-        </form>
-
-        <div class="theme-options">
-            <label for="theme-select">Choisir un thème :</label>
-            <select id="theme-select">
-                <option value="light">Clair</option>
-                <option value="dark">Sombre</option>
-                <option value="blue">Bleu</option>
-                <option value="green">Vert</option>
-                <option value="orange">Orange</option>
-                <option value="purple">Violet</option>
-            </select>
-        </div>
-        <button id="home" onclick="window.location.href='index.html'"">Retour</button>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-        import { getAuth } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyAF2d6Z6AGVpbs_MySepZ55zkSp4x5JmII",
-            authDomain: "cosmos-fr.firebaseapp.com",
-            projectId: "cosmos-fr",
-            storageBucket: "cosmos-fr.firebasestorage.app",
-            messagingSenderId: "480509265804",
-            appId: "1:480509265804:web:e55805b53401a209a4f8a9",
-            measurementId: "G-VKK7HMCCJS"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        window.firebase = { app: app, auth: () => auth };
-    </script>
-    <script type="module" src="auth.js"></script>
-    <script src="script.js"></script>
-    <script>
-        document.getElementById("theme-select").addEventListener("change", function() {
-            document.body.className = this.value + "-theme";
-        });
-    </script>
-</body>
+      <h1>Paramètres</h1>
+      <p id="user-email"></p>
+      <p id="email-verified"></p>
+      <button id="verify-email-button" style="display:none;">Vérifier l'email</button>
+      <button id="logout-button">Déconnexion</button>
+      <form id="reset-password-form">
+        <h2>Réinitialiser le mot de passe</h2>
+        <input type="email" id="reset-email" placeholder="Email" required>
+        <button type="submit">Réinitialiser le mot de passe</button>
+      </form>
+      <div class="theme-options">
+        <label for="theme-select">Choisir un thème :</label>
+        <select id="theme-select">
+          <option value="light">Clair</option>
+          <option value="dark">Sombre</option>
+          <option value="blue">Bleu</option>
+          <option value="green">Vert</option>
+          <option value="orange">Orange</option>
+          <option value="purple">Violet</option>
+        </select>
+      </div>
+      <button id="home" onclick="window.location.href='index.html'">Retour</button>
+							</div>
+							<script type=" module"> import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js"; import { getAuth } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js"; const firebaseConfig = { apiKey: "AIzaSyAF2d6Z6AGVpbs_MySepZ55zkSp4x5JmII", authDomain: "cosmos-fr.firebaseapp.com", projectId: "cosmos-fr", storageBucket: "cosmos-fr.firebasestorage.app", messagingSenderId: "480509265804", appId: "1:480509265804:web:e55805b53401a209a4f8a9", measurementId: "G-VKK7HMCCJS" }; const app = initializeApp(firebaseConfig); const auth = getAuth(app); window.firebase = { app: app, auth: () => auth }; </script>
+        <script type="module" src="auth.js"></script>
+        <script src="script.js"></script>
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            const themeSelect = document.getElementById("theme-select");
+            const savedTheme = localStorage.getItem("selectedTheme") || "light";
+            // Appliquer le thème sauvegardé
+            document.body.className = savedTheme + "-theme";
+            themeSelect.value = savedTheme;
+            themeSelect.addEventListener("change", function() {
+              const theme = this.value;
+              localStorage.setItem("selectedTheme", theme); // Sauvegarde du thème
+              document.body.className = theme + "-theme"; // Applique immédiatement
+            });
+          });
+        </script>
+  </body>
 </html>
