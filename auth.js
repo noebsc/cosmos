@@ -1,3 +1,4 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
 import {
     getAuth,
     signOut,
@@ -24,6 +25,21 @@ import {
     PhoneAuthProvider,
     RecaptchaVerifier
 } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAF2d6Z6AGVpbs_MySepZ55zkSp4x5JmII",
+    authDomain: "cosmos-fr.firebaseapp.com",
+    projectId: "cosmos-fr",
+    storageBucket: "cosmos-fr.firebasestorage.app",
+    messagingSenderId: "480509265804",
+    appId: "1:480509265804:web:e55805b53401a209a4f8a9",
+    measurementId: "G-VKK7HMCCJS"
+};
+
+const app = initializeApp(firebaseConfig); // INITIALISE FIREBASE ICI
+const auth = getAuth(app);
+const db = getDatabase(app);
+const storage = getStorage(app);
 
 document.addEventListener('DOMContentLoaded', function() {
     const auth = getAuth();
