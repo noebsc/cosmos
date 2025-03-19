@@ -5,20 +5,6 @@ document.getElementById('user-input').addEventListener('keydown', function(event
     sendMessage();
   }
 });
-document.getElementById('settings-button').addEventListener('click', () => {
-    const popup = document.getElementById('settings-popup');
-    if (popup.style.display === 'block') {
-      // Ajoutez une classe pour l'animation de fermeture
-      popup.classList.add('fade-out');
-      // Attendez la fin de l'animation pour masquer le pop-up
-      setTimeout(() => {
-        popup.style.display = 'none';
-        popup.classList.remove('fade-out');
-      }, 300); // Assurez-vous que ce délai correspond à la durée de votre animation
-    } else {
-      popup.style.display = 'block';
-    }
-  });
 document.querySelector('.close-button').addEventListener('click', () => {
   document.getElementById('settings-popup').style.display = 'none';
 });
