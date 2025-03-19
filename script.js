@@ -14,6 +14,10 @@ document.getElementById('theme-select').addEventListener('change', function() {
   document.body.classList.add(theme + '-theme');
   localStorage.setItem('selectedTheme', theme);
 });
+document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem("selectedTheme") || "light";
+    document.body.className = savedTheme + "-theme"; // Appliquer le bon thème
+});
 function loadHistory() {
   const historyList = document.getElementById('history-list');
   const history = JSON.parse(localStorage.getItem('chatHistory')) || [];
