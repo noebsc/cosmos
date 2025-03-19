@@ -176,17 +176,19 @@ async function checkMessageLimit(userEmail) {
     const db = getDatabase();
     const sanitizedEmail = userEmail.replace(/[.#$[\]]/g, "_"); // 🔥 Empêche les erreurs Firebase
     const userRef = ref(db, `messageLimits/${sanitizedEmail}`);
+    
+    // 🔥 Récupérer les messages existants depuis Firebase
     const snapshot = await get(userRef);
     const now = Date.now();
 
     let messages = snapshot.exists() ? snapshot.val() : [];
 
-    // ✅ Filtrer les messages pour ne garder que ceux des dernières 24 heures
+    // ✅ Filtrer pour ne garder que les messages des dernières 24 heures
     messages = messages.filter(timestamp => now - timestamp < 24 * 60 * 60 * 1000);
 
-    console.log("📌 Messages enregistrés dans les 24h :", messages.length, messages);
+    console.log("📌 Messages envoyés dans les 24h :", messages.length, messages);
 
-    // ✅ Vérifier si la limite est atteinte (15 messages max en 24h)
+    // ✅ Vérifier si la limite de 15 messages est atteinte
     if (messages.length >= 15) {
         alert("🚫 Vous avez atteint la limite de 15 messages par jour.\n\n" +
               "Cette limitation est mise en place pour garantir un accès équitable à tous les utilisateurs, " +
@@ -195,12 +197,14 @@ async function checkMessageLimit(userEmail) {
         return false;
     }
 
-    // ✅ Ajouter le nouveau message dans Firebase
+    // ✅ Ajouter le nouveau message
     messages.push(now);
+
+    // 🔥 Mettre à jour Firebase avec la liste complète
     await set(userRef, messages);
 
-    console.log("✅ Message ajouté. Nouvelle liste :", messages);
-    
+    console.log("✅ Message ajouté. Nouvelle liste sauvegardée :", messages);
+
     return true;
 }
 
