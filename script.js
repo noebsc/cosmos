@@ -8,15 +8,9 @@ document.getElementById('user-input').addEventListener('keydown', function(event
 document.querySelector('.close-button').addEventListener('click', () => {
   document.getElementById('settings-popup').style.display = 'none';
 });
-document.getElementById('theme-select').addEventListener('change', function() {
-  const theme = this.value;
-  document.body.className = '';
-  document.body.classList.add(theme + '-theme');
-  localStorage.setItem('selectedTheme', theme);
-});
 document.addEventListener("DOMContentLoaded", () => {
     const savedTheme = localStorage.getItem("selectedTheme") || "light";
-    document.body.className = savedTheme + "-theme"; // Appliquer le bon thème
+    document.body.className = savedTheme + "-theme";
 });
 function loadHistory() {
   const historyList = document.getElementById('history-list');
@@ -297,9 +291,9 @@ function escapeHTML(text) {
 window.addEventListener('load', () => {
   loadHistory();
   const selectedTheme = localStorage.getItem('selectedTheme') || 'light';
-  document.body.classList.add(selectedTheme + '-theme');
-  document.getElementById('theme-select').value = selectedTheme;
+  document.body.className = selectedTheme + "-theme";
 });
+
 document.getElementById('newChatButton').addEventListener('click', function() {
   const chatBox = document.getElementById('chat-box');
   chatBox.innerHTML = '';
@@ -307,7 +301,7 @@ document.getElementById('newChatButton').addEventListener('click', function() {
 });
 window.addEventListener('load', () => {
   const selectedTheme = localStorage.getItem('selectedTheme') || 'light';
-  document.body.classList.add(selectedTheme + '-theme');
+  document.body.className = selectedTheme + "-theme";
   document.getElementById('theme-select').value = selectedTheme;
   // Appliquer un effet de fondu
   document.body.classList.add('fade-in');
