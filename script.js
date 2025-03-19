@@ -9,7 +9,7 @@ document.querySelector('.close-button').addEventListener('click', () => {
   document.getElementById('settings-popup').style.display = 'none';
 });
 document.addEventListener("DOMContentLoaded", () => {
-    const savedTheme = localStorage.getItem("selectedTheme") || "light";
+    const savedTheme = localStorage.getItem("selectedTheme") || "green";
     document.body.className = savedTheme + "-theme";
 });
 function loadHistory() {
@@ -290,7 +290,7 @@ function escapeHTML(text) {
 // Charger l'historique au chargement de la page
 window.addEventListener('load', () => {
   loadHistory();
-  const selectedTheme = localStorage.getItem('selectedTheme') || 'light';
+  const selectedTheme = localStorage.getItem('selectedTheme') || 'green';
   document.body.className = selectedTheme + "-theme";
 });
 
@@ -300,7 +300,7 @@ document.getElementById('newChatButton').addEventListener('click', function() {
   document.getElementById('user-input').focus();
 });
 window.addEventListener('load', () => {
-  const selectedTheme = localStorage.getItem('selectedTheme') || 'light';
+  const selectedTheme = localStorage.getItem('selectedTheme') || 'green';
   document.body.className = selectedTheme + "-theme";
   document.getElementById('theme-select').value = selectedTheme;
   // Appliquer un effet de fondu
