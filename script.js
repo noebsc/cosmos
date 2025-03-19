@@ -173,18 +173,35 @@ async function sendMessage() {
 }
 
 async function checkMessageLimit(userEmail) {
-    const userRef = ref(db, `messageLimits/${btoa(userEmail)}`);
+    const db = getDatabase();
+    const sanitizedEmail = userEmail.replace(/[.#$[\]]/g, "_"); // 🔥 Empêche les erreurs Firebase
+    const userRef = ref(db, `messageLimits/${sanitizedEmail}`);
     const snapshot = await get(userRef);
     const now = Date.now();
+
     let messages = snapshot.exists() ? snapshot.val() : [];
 
-    // Filtrer les messages pour ne garder que ceux des dernières 24 heures
+    // ✅ Filtrer les messages pour ne garder que ceux des dernières 24 heures
     messages = messages.filter(timestamp => now - timestamp < 24 * 60 * 60 * 1000);
 
-    // Ajouter le nouveau message à la base de données
+    console.log("📌 Messages enregistrés dans les 24h :", messages.length, messages);
+
+    // ✅ Vérifier si la limite est atteinte (15 messages max en 24h)
+    if (messages.length >= 15) {
+        alert("🚫 Vous avez atteint la limite de 15 messages par jour.\n\n" +
+              "Cette limitation est mise en place pour garantir un accès équitable à tous les utilisateurs, " +
+              "éviter les abus et préserver les ressources du serveur.\n\n" +
+              "Votre quota sera réinitialisé dans 24 heures. Merci de votre compréhension !");
+        return false;
+    }
+
+    // ✅ Ajouter le nouveau message dans Firebase
     messages.push(now);
-    set(userRef, messages);
-    return messages.length <= 15;
+    await set(userRef, messages);
+
+    console.log("✅ Message ajouté. Nouvelle liste :", messages);
+    
+    return true;
 }
 
 function addMessageToChat(sender, message) {
