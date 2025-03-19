@@ -192,10 +192,7 @@ async function checkMessageLimit(userEmail) {
 
     // ✅ Vérifier si la limite de 15 messages est atteinte
     if (messages.length >= 15) {
-        alert("🚫 Vous avez atteint la limite de 15 messages par jour.\n\n" +
-              "Cette limitation est mise en place pour garantir un accès équitable à tous les utilisateurs, " +
-              "éviter les abus et préserver les ressources du serveur.\n\n" +
-              "Votre quota sera réinitialisé dans 24 heures. Merci de votre compréhension !");
+        alert("Accès limité: Vous avez atteint la limite quotidienne.");
         return false;
     }
 
