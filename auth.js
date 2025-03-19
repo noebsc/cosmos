@@ -1,7 +1,29 @@
-import { getAuth, signOut, onAuthStateChanged, updateEmail, updatePassword, reauthenticateWithCredential, EmailAuthProvider, sendEmailVerification, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
-import { getDatabase, ref, set, onValue, push } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
-import { getStorage, ref as storageRef } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-storage.js";
-import { PhoneAuthProvider, RecaptchaVerifier } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+import {
+    getAuth,
+    signOut,
+    onAuthStateChanged,
+    updateEmail,
+    updatePassword,
+    reauthenticateWithCredential,
+    EmailAuthProvider,
+    sendEmailVerification,
+    sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+import {
+    getDatabase,
+    ref,
+    set,
+    onValue,
+    push
+} from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
+import {
+    getStorage,
+    ref as storageRef
+} from "https://www.gstatic.com/firebasejs/11.4.0/firebase-storage.js";
+import {
+    PhoneAuthProvider,
+    RecaptchaVerifier
+} from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
 
 document.addEventListener('DOMContentLoaded', function() {
     const auth = getAuth();
@@ -79,24 +101,25 @@ function initAuthListeners() {
                 });
         });
     }
-    }
-    const resetPasswordForm = document.getElementById('reset-password-form');
-    if (resetPasswordForm) {
-        resetPasswordForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const auth = getAuth();
-            const email = document.getElementById('reset-email').value;
+}
+const resetPasswordForm = document.getElementById('reset-password-form');
+if (resetPasswordForm) {
+    resetPasswordForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const auth = getAuth();
+        const email = document.getElementById('reset-email').value;
 
-            sendPasswordResetEmail(auth, email)
-                .then(() => {
-                    showMessage('Un email de réinitialisation a été envoyé.', 'success');
-                })
-                .catch((error) => {
-                    console.error('Erreur lors de l\'envoi de l\'email de réinitialisation:', error);
-                    showMessage('Erreur lors de l\'envoi de l\'email de réinitialisation.', 'error');
-                });
-        });
-    }
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                showMessage('Un email de réinitialisation a été envoyé.', 'success');
+            })
+            .catch((error) => {
+                console.error('Erreur lors de l\'envoi de l\'email de réinitialisation:', error);
+                showMessage('Erreur lors de l\'envoi de l\'email de réinitialisation.', 'error');
+            });
+    });
+}
+
 function showMessage(message, type) {
     const messageContainer = document.getElementById('message-container');
     if (!messageContainer) {
