@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/png" href="icone.png">
-  <title>COSMOS - Discussion</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-html.min.js"></script>
-  
-</head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="icone.png">
+    <title>COSMOS - Discussion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-html.min.js"></script>
 </head>
 <body>
+    <!-- Votre contenu HTML -->
+    <div id="auth-container">
+    <form id="login-form">
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Mot de passe" required>
+      <button type="submit">Se connecter</button>
+    </form>
+
+    <form id="signup-form">
+      <input type="email" id="signup-email" placeholder="Email" required>
+      <input type="password" id="signup-password" placeholder="Mot de passe" required>
+      <button type="submit">S'inscrire</button>
+    </form>
+  </div>
+
   <button id="newChatButton" class="new-chat-button">+</button>
   <button id="settings-button" class="settings-button">⚙️</button>
   <div class="container">
@@ -29,6 +43,7 @@
       </div>
     </div>
   </div>
+
   <!-- Pop-up pour les paramètres -->
   <div id="settings-popup" class="settings-popup">
     <div class="settings-content">
@@ -55,29 +70,38 @@
   <div class="title-shine">
     <h1 class="app-title">Cosmos</h1>
   </div>
-  <script src="script.js"></script>
-  <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+    <!-- Bouton de déconnexion (à ajouter dans votre menu ou barre de navigation) -->
+    <button id="logout-button">Déconnexion</button>
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyAF2d6Z6AGVpbs_MySepZ55zkSp4x5JmII",
-    authDomain: "cosmos-fr.firebaseapp.com",
-    projectId: "cosmos-fr",
-    storageBucket: "cosmos-fr.firebasestorage.app",
-    messagingSenderId: "480509265804",
-    appId: "1:480509265804:web:e55805b53401a209a4f8a9",
-    measurementId: "G-VKK7HMCCJS"
-  };
+    <!-- Chargement des scripts Firebase -->
+    <script type="module">
+        // Import Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const auth = getAuth(app);
-</script>
+        // Configuration Firebase
+         const firebaseConfig = {
+          apiKey: "AIzaSyAF2d6Z6AGVpbs_MySepZ55zkSp4x5JmII",
+          authDomain: "cosmos-fr.firebaseapp.com",
+          projectId: "cosmos-fr",
+          storageBucket: "cosmos-fr.firebasestorage.app",
+          messagingSenderId: "480509265804",
+          appId: "1:480509265804:web:e55805b53401a209a4f8a9",
+          measurementId: "G-VKK7HMCCJS"
+        };
 
+        // Initialisation Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        
+        // Rendre Firebase disponible globalement
+        window.firebase = {
+            app: app,
+            auth: () => auth
+        };
+    </script>
+    
+    <!-- Chargement de votre script principal APRÈS Firebase -->
+    <script src="script.js"></script>
 </body>
 </html>
