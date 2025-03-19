@@ -81,41 +81,6 @@ function initAuthListeners() {
     }
     }
 
-    const updatePasswordForm = document.getElementById('update-password-form');
-    if (updatePasswordForm) {
-        updatePasswordForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const auth = getAuth();
-            const user = auth.currentUser;
-
-            if (user) {
-                const currentPassword = document.getElementById('current-password').value;
-                const newPassword = document.getElementById('new-password').value;
-                const confirmPassword = document.getElementById('confirm-new-password').value;
-
-                if (newPassword !== confirmPassword) {
-                    showMessage('Les mots de passe ne correspondent pas.', 'error');
-                    return;
-                }
-
-                const credential = EmailAuthProvider.credential(user.email, currentPassword);
-
-                reauthenticateWithCredential(user, credential)
-                    .then(() => {
-                        return updatePassword(user, newPassword);
-                    })
-                    .then(() => {
-                        showMessage('Mot de passe mis à jour avec succès.', 'success');
-                        updatePasswordForm.reset();
-                    })
-                    .catch((error) => {
-                        console.error('Erreur de mise à jour du mot de passe:', error);
-                        showMessage('Erreur lors de la mise à jour du mot de passe.', 'error');
-                    });
-            }
-        });
-    }
-
     const resetPasswordForm = document.getElementById('reset-password-form');
     if (resetPasswordForm) {
         resetPasswordForm.addEventListener('submit', (e) => {
