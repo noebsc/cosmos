@@ -80,7 +80,6 @@ function initAuthListeners() {
         });
     }
     }
-
     const resetPasswordForm = document.getElementById('reset-password-form');
     if (resetPasswordForm) {
         resetPasswordForm.addEventListener('submit', (e) => {
@@ -96,29 +95,6 @@ function initAuthListeners() {
                     console.error('Erreur lors de l\'envoi de l\'email de réinitialisation:', error);
                     showMessage('Erreur lors de l\'envoi de l\'email de réinitialisation.', 'error');
                 });
-        });
-    }
-
-    const uploadProfilePictureForm = document.getElementById('upload-profile-picture-form');
-    if (uploadProfilePictureForm) {
-        uploadProfilePictureForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const fileInput = document.getElementById('profile-picture-input');
-            const file = fileInput.files[0];
-
-            if (file) {
-                const storage = getStorage();
-                const fileRef = storageRef(storage, `profilePictures/${auth.currentUser.uid}/${file.name}`);
-
-                fileRef.put(file)
-                    .then(() => {
-                        showMessage('Photo de profil mise à jour avec succès.', 'success');
-                    })
-                    .catch((error) => {
-                        console.error('Erreur lors du téléchargement de la photo de profil:', error);
-                        showMessage('Erreur lors du téléchargement de la photo de profil.', 'error');
-                    });
-            }
         });
     }
 }
