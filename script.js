@@ -59,48 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.className = savedTheme + "-theme";
 });
 
-function loadHistory() {
-    const historyList = document.getElementById('history-list');
-    const history = JSON.parse(localStorage.getItem('chatHistory')) || [];
-    historyList.innerHTML = '';
-    history.forEach((chat, index) => {
-        const li = document.createElement('li');
-        li.innerHTML = `
-      <span>${chat.name || `Discussion ${index + 1}`}</span>
-      <button class="rename-button">Renommer</button>
-    `;
-        li.dataset.index = index;
-        li.querySelector('.rename-button').addEventListener('click', (event) => {
-            event.stopPropagation();
-            const newName = prompt('Nommez cette discussion :', chat.name || `Discussion ${index + 1}`);
-            if (newName) {
-                chat.name = newName;
-                localStorage.setItem('chatHistory', JSON.stringify(history));
-                loadHistory();
-            }
-        });
-        li.addEventListener('click', () => loadChat(index));
-        historyList.appendChild(li);
-    });
-}
-
-function saveChat(name) {
-    const chatBox = document.getElementById('chat-box');
-    const messages = Array.from(chatBox.children).map(message => message.outerHTML);
-    const chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
-    const existingChatIndex = chatHistory.findIndex(chat => chat.name === name);
-    if (existingChatIndex !== -1) {
-        chatHistory[existingChatIndex].messages = messages;
-    } else {
-        chatHistory.unshift({
-            name,
-            messages
-        });
-    }
-    localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
-    loadHistory();
-}
-
 function displayCode(code, language) {
     // Créez un élément <pre> et <code>
     const pre = document.createElement('pre');
@@ -117,14 +75,6 @@ function displayCode(code, language) {
     Prism.highlightElement(codeElement);
 }
 
-function loadChat(index) {
-    const chatHistory = JSON.parse(localStorage.getItem('chatHistory'));
-    const chat = chatHistory[index];
-    const chatBox = document.getElementById('chat-box');
-    chatBox.innerHTML = chat.messages.join('');
-    chatBox.scrollTop = chatBox.scrollHeight; // Assurez-vous que le conteneur défile vers le bas
-    document.getElementById('user-input').focus();
-}
 const forbiddenWords = [
     'abruti', 'andouille', 'bâtard', 'bouffon', 'connard', 'con', 'crétin', 'débile', 'enculé',
     'fdp', 'grognasse', 'idiot', 'imbécile', 'merde', 'naze', 'pute', 'salopard', 'salope', 'tapette',
@@ -176,12 +126,6 @@ async function sendMessage() {
             // Filtrer les messages pour ne garder que ceux des dernières 24 heures
             messages = messages.filter(timestamp => now - timestamp < 24 * 60 * 60 * 1000);
 
-            // Vérifier si la limite est atteinte
-            if (messages.length >= 15) {
-                alert("Vous avez atteint la limite de 15 messages par jour.");
-                return false;
-            }
-
             // Ajouter le nouveau message à la base de données
             messages.push(now);
             set(userRef, messages);
@@ -230,7 +174,6 @@ async function sendMessage() {
                     generatedResponse = generatedResponse.replace(/<think>[\s\S]*?<\/think>/g, '').replace(/\n/g, '<br>');
                     addMessageToChat('ai', generatedResponse);
                     const chatName = prompt("Nommez cette discussion :", `Discussion ${historyList.children.length + 1}`);
-                    saveChat(chatName);
                 }
                 return generatedResponse; // Retourner la réponse pour le prochain .then()
             })
@@ -336,7 +279,6 @@ function formatTextContent(text) {
 
 // Charger l'historique au chargement de la page
 window.addEventListener('load', () => {
-    loadHistory();
     const selectedTheme = localStorage.getItem('selectedTheme') || 'green';
     document.body.className = selectedTheme + "-theme";
 });
