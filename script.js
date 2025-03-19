@@ -96,7 +96,6 @@ async function sendMessage() {
     const containsForbiddenWord = forbiddenWords.some(word => message.includes(word));
     if (containsForbiddenWord) {
         alert('Votre message contient un mot interdit. Veillez à votre langage.');
-        return; // Ajoutez un retour ici pour éviter l'envoi de messages interdits
     }
 
     if (message) {
