@@ -139,8 +139,6 @@ const forbiddenWords = [
                 history += ` -${sender}: ${msgContent}`;
             });
         }
-        import { getDatabase, ref, set, push, get } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
-        import { getAuth } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
         
         const db = getDatabase();
         const auth = getAuth();
