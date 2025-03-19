@@ -97,9 +97,6 @@
       <script src="script.js"></script>
       <script>
         document.addEventListener("DOMContentLoaded", () => {
-          const app = initializeApp(firebaseConfig);
-          const auth = getAuth(app);
-          window.firebase = { app: app, auth: () => auth };
           const themeSelect = document.getElementById("theme-select");
           const savedTheme = localStorage.getItem("selectedTheme") || "green";
           // Appliquer le thème et sauvegarder la sélection du menu
@@ -110,7 +107,6 @@
             localStorage.setItem("selectedTheme", theme);
             document.body.className = theme + "-theme";
             console.log("Thème sélectionné et enregistré :", theme);
-          });
           const auth = firebase.auth();
           auth.onAuthStateChanged((user) => {
               if (user) {
@@ -126,6 +122,7 @@
                   document.getElementById("user-email").textContent = "Aucun utilisateur connecté";
                   document.getElementById("email-verified").textContent = "";
               }
+          });
           });
         });
       </script>
