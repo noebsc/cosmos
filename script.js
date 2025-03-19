@@ -1,3 +1,27 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+import { getDatabase } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-storage.js";
+
+// 📌 Remplace par tes propres infos Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyAF2d6Z6AGVpbs_MySepZ55zkSp4x5JmII",
+    authDomain: "cosmos-fr.firebaseapp.com",
+    projectId: "cosmos-fr",
+    storageBucket: "cosmos-fr.firebasestorage.app",
+    messagingSenderId: "480509265804",
+    appId: "1:480509265804:web:e55805b53401a209a4f8a9",
+    measurementId: "G-VKK7HMCCJS"
+};
+
+// ✅ Initialisation Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+const storage = getStorage(app);
+
+// 📌 Rendre Firebase accessible dans tout ton script
+window.firebase = { app, auth, db, storage };
 document.addEventListener("DOMContentLoaded", () => {
     const sendButton = document.getElementById('send-button');
     if (sendButton) {
