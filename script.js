@@ -1,4 +1,9 @@
-document.getElementById('send-button').addEventListener('click', sendMessage);
+document.addEventListener("DOMContentLoaded", () => {
+    const sendButton = document.getElementById('send-button');
+    if (sendButton) {
+        sendButton.addEventListener('click', sendMessage);
+    }
+});
 document.getElementById('user-input').addEventListener('keydown', function(event) {
   if (event.key === 'Enter' && !event.shiftKey) {
     event.preventDefault();
