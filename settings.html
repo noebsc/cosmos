@@ -76,17 +76,20 @@
         <script src="script.js"></script>
         <script>
           document.addEventListener("DOMContentLoaded", () => {
-            const themeSelect = document.getElementById("theme-select");
-            const savedTheme = localStorage.getItem("selectedTheme") || "light";
-            // Appliquer le thème sauvegardé
-            document.body.className = savedTheme + "-theme";
-            themeSelect.value = savedTheme;
-            themeSelect.addEventListener("change", function() {
-              const theme = this.value;
-              localStorage.setItem("selectedTheme", theme); // Sauvegarde du thème
-              document.body.className = theme + "-theme"; // Applique immédiatement
-            });
-          });
+	    const themeSelect = document.getElementById("theme-select");
+	    const savedTheme = localStorage.getItem("selectedTheme") || "light";
+	
+	    // Appliquer le thème et sauvegarder la sélection du menu
+	    document.body.className = savedTheme + "-theme";
+	    themeSelect.value = savedTheme;
+	
+	    themeSelect.addEventListener("change", function() {
+	        const theme = this.value;
+	        localStorage.setItem("selectedTheme", theme);
+	        document.body.className = theme + "-theme";
+	        console.log("Thème sélectionné et enregistré :", theme);
+	    });
+	});
         </script>
   </body>
 </html>
