@@ -158,10 +158,6 @@ function showMessage(message, type) {
     }, 3000);
 }
 
-if (typeof db === "undefined") {
-    const db = getDatabase(app);
-}
-
 function updateUserData(userId, data) {
     set(ref(db, 'users/' + userId), data);
 }
