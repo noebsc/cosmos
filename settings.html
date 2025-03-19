@@ -70,26 +70,45 @@
         </select>
       </div>
       <button id="home" onclick="window.location.href='index.html'">Retour</button>
-							</div>
-							<script type=" module"> import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js"; import { getAuth } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js"; const firebaseConfig = { apiKey: "AIzaSyAF2d6Z6AGVpbs_MySepZ55zkSp4x5JmII", authDomain: "cosmos-fr.firebaseapp.com", projectId: "cosmos-fr", storageBucket: "cosmos-fr.firebasestorage.app", messagingSenderId: "480509265804", appId: "1:480509265804:web:e55805b53401a209a4f8a9", measurementId: "G-VKK7HMCCJS" }; const app = initializeApp(firebaseConfig); const auth = getAuth(app); window.firebase = { app: app, auth: () => auth }; </script>
-        <script type="module" src="auth.js"></script>
-        <script src="script.js"></script>
-        <script>
-          document.addEventListener("DOMContentLoaded", () => {
-	    const themeSelect = document.getElementById("theme-select");
-	    const savedTheme = localStorage.getItem("selectedTheme") || "green";
-	
-	    // Appliquer le thème et sauvegarder la sélection du menu
-	    document.body.className = savedTheme + "-theme";
-	    themeSelect.value = savedTheme;
-	
-	    themeSelect.addEventListener("change", function() {
-	        const theme = this.value;
-	        localStorage.setItem("selectedTheme", theme);
-	        document.body.className = theme + "-theme";
-	        console.log("Thème sélectionné et enregistré :", theme);
-	    });
-	});
-        </script>
+      <script type=" module">
+        import {
+          initializeApp
+        } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+        import {
+          getAuth
+        } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+        const firebaseConfig = {
+          apiKey: "AIzaSyAF2d6Z6AGVpbs_MySepZ55zkSp4x5JmII",
+          authDomain: "cosmos-fr.firebaseapp.com",
+          projectId: "cosmos-fr",
+          storageBucket: "cosmos-fr.firebasestorage.app",
+          messagingSenderId: "480509265804",
+          appId: "1:480509265804:web:e55805b53401a209a4f8a9",
+          measurementId: "G-VKK7HMCCJS"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        window.firebase = {
+          app: app,
+          auth: () => auth
+        };
+      </script>
+      <script type="module" src="auth.js"></script>
+      <script src="script.js"></script>
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const themeSelect = document.getElementById("theme-select");
+          const savedTheme = localStorage.getItem("selectedTheme") || "green";
+          // Appliquer le thème et sauvegarder la sélection du menu
+          document.body.className = savedTheme + "-theme";
+          themeSelect.value = savedTheme;
+          themeSelect.addEventListener("change", function() {
+            const theme = this.value;
+            localStorage.setItem("selectedTheme", theme);
+            document.body.className = theme + "-theme";
+            console.log("Thème sélectionné et enregistré :", theme);
+          });
+        });
+      </script>
   </body>
 </html>
