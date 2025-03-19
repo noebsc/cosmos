@@ -1,170 +1,76 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosmos - Connexion</title>
-    <style>
-        :root {
-            --primary-color: #7289DA;
-            --secondary-color: #424549;
-            --text-color: #2C2F33;
-            --background-color: #f5f5f5;
-            --card-background: #ffffff;
-            --input-background: #eaeaea;
-            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 400px;
-            width: 100%;
-            padding: 20px;
-        }
-
-        .login-card {
-            background-color: var(--card-background);
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: var(--box-shadow);
-        }
-
-        .tabs {
-            display: flex;
-            margin-bottom: 20px;
-        }
-
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            font-weight: 600;
-        }
-
-        .tab.active {
-            border-bottom: 2px solid var(--primary-color);
-            color: var(--primary-color);
-        }
-
-        .form-container {
-            display: none;
-        }
-
-        .form-container.active {
-            display: block;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            background-color: var(--input-background);
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #5b6eae;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion - Cosmos</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="login-card">
-            <div class="tabs">
-                <div class="tab active" id="login-tab">Connexion - Maintenance</div>
-                <div class="tab" id="signup-tab">Inscription - Maintenance</div>
-            </div>
-            
-            <div class="form-container active" id="login-form-container">
-                <form id="login-form">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
-                    <label for="password">Mot de passe</label>
-                    <input type="password" id="password" required>
-                    <div class="error-message" id="login-error"></div>
-                    <button type="submit">Nous effectuons des améliorations. Revenez bientôt !</button>
-                </form>
-            </div>
-            
-            <div class="form-container" id="signup-form-container">
-                <form id="signup-form">
-                    <label for="signup-email">Email</label>
-                    <input type="email" id="signup-email" required>
-                    <label for="signup-password">Mot de passe</label>
-                    <input type="password" id="signup-password" required minlength="6">
-                    <label for="confirm-password">Confirmer le mot de passe</label>
-                    <input type="password" id="confirm-password" required minlength="6">
-                    <div class="error-message" id="signup-error"></div>
-                    <button type="submit">Nous effectuons des améliorations. Revenez bientôt !</button>
-                </form>
-            </div>
-        </div>
-    </div>
+  <div id="auth-container">
+    <form id="login-form">
+      <h2>Se connecter</h2>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Mot de passe" required>
+      <button type="submit">Se connecter</button>
+    </form>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyAF2d6Z6Z...",
-            authDomain: "cosmos-fr.firebaseapp.com",
-            projectId: "cosmos-fr",
-            storageBucket: "cosmos-fr.appspot.com",
-            messagingSenderId: "480509265804",
-            appId: "1:480509265804:web:e55805b53401a209a4f8a9",
-            measurementId: "G-VKK7HMCCJS"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
+    <form id="signup-form">
+      <h2>S'inscrire</h2>
+      <input type="email" id="signup-email" placeholder="Email" required>
+      <input type="password" id="signup-password" placeholder="Mot de passe" required>
+      <button type="submit">S'inscrire</button>
+    </form>
+  </div>
 
-        document.getElementById('login-tab').addEventListener('click', () => {
-            document.getElementById('login-tab').classList.add('active');
-            document.getElementById('signup-tab').classList.remove('active');
-            document.getElementById('login-form-container').classList.add('active');
-            document.getElementById('signup-form-container').classList.remove('active');
+  <!-- Script Firebase -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAF2d6Z6AGVpbs_MySepZ55zkSp4x5JmII",
+      authDomain: "cosmos-fr.firebaseapp.com",
+      projectId: "cosmos-fr",
+      storageBucket: "cosmos-fr.firebasestorage.app",
+      messagingSenderId: "480509265804",
+      appId: "1:480509265804:web:e55805b53401a209a4f8a9",
+      measurementId: "G-VKK7HMCCJS"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          console.log('Logged in!', userCredential.user);
+          window.location.href = 'index.html'; // Rediriger vers la page principale après la connexion
+        })
+        .catch((error) => {
+          console.error('Error logging in:', error);
         });
+    });
 
-        document.getElementById('signup-tab').addEventListener('click', () => {
-            document.getElementById('signup-tab').classList.add('active');
-            document.getElementById('login-tab').classList.remove('active');
-            document.getElementById('signup-form-container').classList.add('active');
-            document.getElementById('login-form-container').classList.remove('active');
+    document.getElementById('signup-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          console.log('Signed up!', userCredential.user);
+          window.location.href = 'index.html'; // Rediriger vers la page principale après l'inscription
+        })
+        .catch((error) => {
+          console.error('Error signing up:', error);
         });
-    </script>
+    });
+  </script>
 </body>
 </html>
