@@ -305,48 +305,6 @@ function addMessageToChat(sender, message) {
     chatBox.scrollTop = chatBox.scrollHeight; // Assurez-vous que le conteneur défile vers le bas
 }
 
-// Fonction pour échapper les caractères HTML dans les blocs de code
-function escapeHTML(text) {
-    return text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-}
-
-
-// Fonction pour échapper les caractères HTML dans les blocs de code
-function escapeHTML(text) {
-    return text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-}
-
-// Fonction pour échapper les caractères HTML dans les blocs de code
-function escapeHTML(text) {
-    return text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-}
-
-
-// Fonction pour échapper les caractères HTML dans les blocs de code
-function escapeHTML(text) {
-    return text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-}
-
 
 // Fonction pour échapper les caractères HTML dans les blocs de code
 function escapeHTML(text) {
@@ -367,15 +325,7 @@ function formatTextContent(text) {
         .replace(/\*(.+?)\*/g, '<i>$1</i>')
         .replace(/\n/g, '<br>');
 }
-// Fonction pour échapper les caractères HTML dans les blocs de code
-function escapeHTML(text) {
-    return text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-}
+
 // Charger l'historique au chargement de la page
 window.addEventListener('load', () => {
     loadHistory();
