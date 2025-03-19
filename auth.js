@@ -97,8 +97,6 @@ function initAuthListeners() {
                 });
         });
     }
-}
-
 function showMessage(message, type) {
     const messageContainer = document.getElementById('message-container');
     if (!messageContainer) {
