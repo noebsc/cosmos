@@ -79,35 +79,6 @@ function initAuthListeners() {
                 });
         });
     }
-
-    const updateEmailForm = document.getElementById('update-email-form');
-    if (updateEmailForm) {
-        updateEmailForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const auth = getAuth();
-            const user = auth.currentUser;
-
-            if (user) {
-                const newEmail = document.getElementById('new-email').value;
-                const password = document.getElementById('current-password-for-email').value;
-
-                const credential = EmailAuthProvider.credential(user.email, password);
-
-                reauthenticateWithCredential(user, credential)
-                    .then(() => {
-                        return updateEmail(user, newEmail);
-                    })
-                    .then(() => {
-                        showMessage('Email mis à jour avec succès.', 'success');
-                        updateEmailForm.reset();
-                        updateUserUI(user);
-                    })
-                    .catch((error) => {
-                        console.error('Erreur de mise à jour de l\'email:', error);
-                        showMessage('Erreur lors de la mise à jour de l\'email.', 'error');
-                    });
-            }
-        });
     }
 
     const updatePasswordForm = document.getElementById('update-password-form');
