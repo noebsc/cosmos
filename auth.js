@@ -1,41 +1,39 @@
-// Firebase Authentication Helper
-import { getAuth, signOut, onAuthStateChanged, updateEmail, updatePassword, reauthenticateWithCredential, EmailAuthProvider, sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+import { getAuth, signOut, onAuthStateChanged, updateEmail, updatePassword, reauthenticateWithCredential, EmailAuthProvider, sendEmailVerification, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+import { getDatabase, ref, set, onValue, push } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-database.js";
+import { getStorage, ref as storageRef } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-storage.js";
+import { PhoneAuthProvider, RecaptchaVerifier } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
 
-// Vérifier si l'utilisateur est connecté à chaque chargement de page
 document.addEventListener('DOMContentLoaded', function() {
     const auth = getAuth();
-    
-    // Vérifier l'état de l'authentification
+
     onAuthStateChanged(auth, (user) => {
         if (!user) {
-            // Si l'utilisateur n'est pas connecté et qu'on n'est pas sur la page de connexion
             if (!window.location.href.includes('login.html')) {
                 window.location.href = 'login.html';
             }
         } else {
-            // Si l'utilisateur est connecté et qu'on est sur la page de connexion
             if (window.location.href.includes('login.html')) {
                 window.location.href = 'index.html';
             }
-            
-            // Mettre à jour l'interface utilisateur avec les informations de l'utilisateur
             updateUserUI(user);
         }
     });
-    
-    // Initialiser les écouteurs d'événements
+
     initAuthListeners();
+
+    const recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+        'size': 'normal',
+        'callback': (response) => {},
+        'expired-callback': () => {}
+    });
 });
 
-// Mettre à jour l'interface utilisateur avec les informations de l'utilisateur
 function updateUserUI(user) {
-    // Ajouter l'email de l'utilisateur à l'interface si l'élément existe
     const userEmailElement = document.getElementById('user-email');
     if (userEmailElement) {
         userEmailElement.textContent = user.email;
     }
-    
-    // Vérifier si l'email est vérifié
+
     const emailVerifiedElement = document.getElementById('email-verified');
     if (emailVerifiedElement) {
         if (user.emailVerified) {
@@ -46,8 +44,7 @@ function updateUserUI(user) {
             emailVerifiedElement.textContent = 'Email non vérifié';
             emailVerifiedElement.classList.add('not-verified');
             emailVerifiedElement.classList.remove('verified');
-            
-            // Ajouter un bouton pour renvoyer l'email de vérification si nécessaire
+
             const verifyEmailButton = document.getElementById('verify-email-button');
             if (verifyEmailButton) {
                 verifyEmailButton.style.display = 'block';
@@ -66,9 +63,7 @@ function updateUserUI(user) {
     }
 }
 
-// Initialiser les écouteurs d'événements pour l'authentification
 function initAuthListeners() {
-    // Bouton de déconnexion
     const logoutButton = document.getElementById('logout-button');
     if (logoutButton) {
         logoutButton.addEventListener('click', () => {
@@ -84,22 +79,20 @@ function initAuthListeners() {
                 });
         });
     }
-    
-    // Formulaire de modification d'email
+
     const updateEmailForm = document.getElementById('update-email-form');
     if (updateEmailForm) {
         updateEmailForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const auth = getAuth();
             const user = auth.currentUser;
-            
+
             if (user) {
                 const newEmail = document.getElementById('new-email').value;
                 const password = document.getElementById('current-password-for-email').value;
-                
-                // Réauthentifier l'utilisateur avant de modifier l'email
+
                 const credential = EmailAuthProvider.credential(user.email, password);
-                
+
                 reauthenticateWithCredential(user, credential)
                     .then(() => {
                         return updateEmail(user, newEmail);
@@ -116,28 +109,26 @@ function initAuthListeners() {
             }
         });
     }
-    
-    // Formulaire de modification de mot de passe
+
     const updatePasswordForm = document.getElementById('update-password-form');
     if (updatePasswordForm) {
         updatePasswordForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const auth = getAuth();
             const user = auth.currentUser;
-            
+
             if (user) {
                 const currentPassword = document.getElementById('current-password').value;
                 const newPassword = document.getElementById('new-password').value;
                 const confirmPassword = document.getElementById('confirm-new-password').value;
-                
+
                 if (newPassword !== confirmPassword) {
                     showMessage('Les mots de passe ne correspondent pas.', 'error');
                     return;
                 }
-                
-                // Réauthentifier l'utilisateur avant de modifier le mot de passe
+
                 const credential = EmailAuthProvider.credential(user.email, currentPassword);
-                
+
                 reauthenticateWithCredential(user, credential)
                     .then(() => {
                         return updatePassword(user, newPassword);
@@ -153,13 +144,52 @@ function initAuthListeners() {
             }
         });
     }
+
+    const resetPasswordForm = document.getElementById('reset-password-form');
+    if (resetPasswordForm) {
+        resetPasswordForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const auth = getAuth();
+            const email = document.getElementById('reset-email').value;
+
+            sendPasswordResetEmail(auth, email)
+                .then(() => {
+                    showMessage('Un email de réinitialisation a été envoyé.', 'success');
+                })
+                .catch((error) => {
+                    console.error('Erreur lors de l\'envoi de l\'email de réinitialisation:', error);
+                    showMessage('Erreur lors de l\'envoi de l\'email de réinitialisation.', 'error');
+                });
+        });
+    }
+
+    const uploadProfilePictureForm = document.getElementById('upload-profile-picture-form');
+    if (uploadProfilePictureForm) {
+        uploadProfilePictureForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const fileInput = document.getElementById('profile-picture-input');
+            const file = fileInput.files[0];
+
+            if (file) {
+                const storage = getStorage();
+                const fileRef = storageRef(storage, `profilePictures/${auth.currentUser.uid}/${file.name}`);
+
+                fileRef.put(file)
+                    .then(() => {
+                        showMessage('Photo de profil mise à jour avec succès.', 'success');
+                    })
+                    .catch((error) => {
+                        console.error('Erreur lors du téléchargement de la photo de profil:', error);
+                        showMessage('Erreur lors du téléchargement de la photo de profil.', 'error');
+                    });
+            }
+        });
+    }
 }
 
-// Afficher un message à l'utilisateur
 function showMessage(message, type) {
     const messageContainer = document.getElementById('message-container');
     if (!messageContainer) {
-        // Créer un conteneur de message s'il n'existe pas
         const newMessageContainer = document.createElement('div');
         newMessageContainer.id = 'message-container';
         newMessageContainer.style.position = 'fixed';
@@ -167,11 +197,43 @@ function showMessage(message, type) {
         newMessageContainer.style.right = '20px';
         newMessageContainer.style.zIndex = '9999';
         document.body.appendChild(newMessageContainer);
-        
-        // Utiliser le nouveau conteneur
-        showMessage(message, type);
-        return;
     }
-    
-    // Créer l'élément de message
-    const messageElement = document.
+
+    const messageElement = document.createElement('div');
+    messageElement.textContent = message;
+    messageElement.classList.add('message', type);
+    messageContainer.appendChild(messageElement);
+
+    setTimeout(() => {
+        messageElement.remove();
+    }, 3000);
+}
+
+const db = getDatabase();
+
+function updateUserData(userId, data) {
+    set(ref(db, 'users/' + userId), data);
+}
+
+function listenToUserData(userId, callback) {
+    const userRef = ref(db, 'users/' + userId);
+    onValue(userRef, (snapshot) => {
+        const data = snapshot.val();
+        callback(data);
+    });
+}
+
+function logUserActivity(userId, activity) {
+    const activityRef = ref(db, 'activities/' + userId);
+    const newActivityRef = push(activityRef);
+    set(newActivityRef, {
+        timestamp: new Date().toISOString(),
+        activity: activity
+    });
+}
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        logUserActivity(user.uid, 'Login');
+    }
+});
