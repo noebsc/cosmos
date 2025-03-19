@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
+  <head>
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,111 +13,105 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-html.min.js"></script>
-</head>
-<body>
-        <p id="user-email"></p>
-        <p id="email-verified"></p>
-        <button id="verify-email-button" style="display:none;">Vérifier l'email</button>
-        <button id="logout-button">Déconnexion</button>
-
-        <form id="update-email-form">
-            <h2>Modifier l'email</h2>
-            <input type="email" id="new-email" placeholder="Nouvel email" required>
-            <input type="password" id="current-password-for-email" placeholder="Mot de passe actuel" required>
-            <button type="submit">Mettre à jour l'email</button>
-        </form>
-
-        <form id="update-password-form">
-            <h2>Modifier le mot de passe</h2>
-            <input type="password" id="current-password" placeholder="Mot de passe actuel" required>
-            <input type="password" id="new-password" placeholder="Nouveau mot de passe" required>
-            <input type="password" id="confirm-new-password" placeholder="Confirmer le nouveau mot de passe" required>
-            <button type="submit">Mettre à jour le mot de passe</button>
-        </form>
-
-        <form id="reset-password-form">
-            <h2>Réinitialiser le mot de passe</h2>
-            <input type="email" id="reset-email" placeholder="Email" required>
-            <button type="submit">Réinitialiser le mot de passe</button>
-        </form>
-
-        <form id="upload-profile-picture-form">
-            <h2>Télécharger une photo de profil</h2>
-            <input type="file" id="profile-picture-input" required>
-            <button type="submit">Télécharger</button>
-        </form>
-
-        <div id="message-container"></div>
-        <div id="recaptcha-container"></div>
-  <button id="newChatButton" class="new-chat-button">+</button>
-  <button id="settings-button" class="settings-button">⚙️</button>
-  <div class="container">
-    <div class="chat-container">
-      <div class="chat-box" id="chat-box">
-        <!-- Les messages apparaîtront ici -->
-      </div>
-      <div class="input-container">
-        <textarea id="user-input" placeholder="Écrivez votre message ici..."></textarea>
-        <button id="send-button">Envoyer</button>
+  </head>
+  <body>
+    <p id="user-email"></p>
+    <p id="email-verified"></p>
+    <button id="verify-email-button" style="display:none;">Vérifier l'email</button>
+    <button id="logout-button">Déconnexion</button>
+    <form id="update-email-form">
+      <h2>Modifier l'email</h2>
+      <input type="email" id="new-email" placeholder="Nouvel email" required>
+      <input type="password" id="current-password-for-email" placeholder="Mot de passe actuel" required>
+      <button type="submit">Mettre à jour l'email</button>
+    </form>
+    <form id="update-password-form">
+      <h2>Modifier le mot de passe</h2>
+      <input type="password" id="current-password" placeholder="Mot de passe actuel" required>
+      <input type="password" id="new-password" placeholder="Nouveau mot de passe" required>
+      <input type="password" id="confirm-new-password" placeholder="Confirmer le nouveau mot de passe" required>
+      <button type="submit">Mettre à jour le mot de passe</button>
+    </form>
+    <form id="reset-password-form">
+      <h2>Réinitialiser le mot de passe</h2>
+      <input type="email" id="reset-email" placeholder="Email" required>
+      <button type="submit">Réinitialiser le mot de passe</button>
+    </form>
+    <form id="upload-profile-picture-form">
+      <h2>Télécharger une photo de profil</h2>
+      <input type="file" id="profile-picture-input" required>
+      <button type="submit">Télécharger</button>
+    </form>
+    <div id="message-container"></div>
+    <div id="recaptcha-container"></div>
+    <button id="newChatButton" class="new-chat-button">+</button>
+    <button id="settings-button" class="settings-button">⚙️</button>
+    <div class="container">
+      <div class="chat-container">
+        <div class="chat-box" id="chat-box">
+          <!-- Les messages apparaîtront ici -->
+        </div>
+        <div class="input-container">
+          <textarea id="user-input" placeholder="Écrivez votre message ici..."></textarea>
+          <button id="send-button">Envoyer</button>
+        </div>
       </div>
     </div>
-  </div>
-
-  <!-- Pop-up pour les paramètres -->
-  <div id="settings-popup" class="settings-popup">
-    <div class="settings-content">
-      <span class="close-button">&times;</span>
-      <h2>Paramètres</h2>
-      <div class="theme-options">
-        <label for="theme-select">Choisir un thème :</label>
-        <select id="theme-select">
-          <option value="light">Clair</option>
-          <option value="dark">Sombre</option>
-          <option value="blue">Bleu</option>
-          <option value="green">Vert</option>
-          <option value="orange">Orange</option>
-          <option value="purple">Violet</option>
-        </select>
+    <!-- Pop-up pour les paramètres -->
+    <div id="settings-popup" class="settings-popup">
+      <div class="settings-content">
+        <span class="close-button">&times;</span>
+        <h2>Paramètres</h2>
+        <div class="theme-options">
+          <label for="theme-select">Choisir un thème :</label>
+          <select id="theme-select">
+            <option value="light">Clair</option>
+            <option value="dark">Sombre</option>
+            <option value="blue">Bleu</option>
+            <option value="green">Vert</option>
+            <option value="orange">Orange</option>
+            <option value="purple">Violet</option>
+          </select>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="copyright-container">
-    <div class="copyright-text">© 2025 Noé BESANÇON / Cosmos - Tous droits réservés</div>
-    <div class="shine-effect"></div>
-  </div>
-  <img src="icone.png" alt="Cosmos" width="40" height="40" class="app-icon">
-  <div class="title-shine">
-    <h1 class="app-title">Cosmos</h1>
-  </div>
+    <div class="copyright-container">
+      <div class="copyright-text">© 2025 Noé BESANÇON / Cosmos - Tous droits réservés</div>
+      <div class="shine-effect"></div>
+    </div>
+    <img src="icone.png" alt="Cosmos" width="40" height="40" class="app-icon">
+    <div class="title-shine">
+      <h1 class="app-title">Cosmos</h1>
+    </div>
     <!-- Chargement des scripts Firebase -->
     <script type="module">
-        // Import Firebase SDK
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-        import { getAuth } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
-
-        // Configuration Firebase
-         const firebaseConfig = {
-          apiKey: "AIzaSyAF2d6Z6AGVpbs_MySepZ55zkSp4x5JmII",
-          authDomain: "cosmos-fr.firebaseapp.com",
-          projectId: "cosmos-fr",
-          storageBucket: "cosmos-fr.firebasestorage.app",
-          messagingSenderId: "480509265804",
-          appId: "1:480509265804:web:e55805b53401a209a4f8a9",
-          measurementId: "G-VKK7HMCCJS"
-        };
-
-        // Initialisation Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        
-        // Rendre Firebase disponible globalement
-        window.firebase = {
-            app: app,
-            auth: () => auth
-        };
+      // Import Firebase SDK
+      import {
+        initializeApp
+      } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
+      import {
+        getAuth
+      } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
+      // Configuration Firebase
+      const firebaseConfig = {
+        apiKey: "AIzaSyAF2d6Z6AGVpbs_MySepZ55zkSp4x5JmII",
+        authDomain: "cosmos-fr.firebaseapp.com",
+        projectId: "cosmos-fr",
+        storageBucket: "cosmos-fr.firebasestorage.app",
+        messagingSenderId: "480509265804",
+        appId: "1:480509265804:web:e55805b53401a209a4f8a9",
+        measurementId: "G-VKK7HMCCJS"
+      };
+      // Initialisation Firebase
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      // Rendre Firebase disponible globalement
+      window.firebase = {
+        app: app,
+        auth: () => auth
+      };
     </script>
-    
     <!-- Chargement de votre script principal APRÈS Firebase -->
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
