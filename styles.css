@@ -137,6 +137,7 @@ body {
     color: white;
     cursor: pointer;
     transition: all 0.3s;
+    z-index: 9999;
   }
   
   button:hover {
