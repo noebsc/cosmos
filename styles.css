@@ -280,7 +280,7 @@ body {
   }  
 
   .new-chat-button {
-    position: fixed;
+   position: fixed;
    bottom: 20px;
    right: 20px;
    width: 50px;
@@ -288,8 +288,9 @@ body {
    border-radius: 50%;
    border: none;
    font-size: 24px;
-  cursor: pointer;
+   cursor: pointer;
    transition: background-color 0.3s, transform 0.3s;
+   z-index: 9999;
   }
   .settings-button {
    position: fixed;
@@ -407,6 +408,7 @@ body {
 /* Ajuster la position du bouton de paramètres pour ne pas chevaucher le titre */
 .settings-button {
   top: 40px;
+  z-index: 9999;
 }
 .settings-button:hover {
   transform: scale(1.1);
