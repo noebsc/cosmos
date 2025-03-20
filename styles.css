@@ -478,16 +478,18 @@ body {
 
 .footer {
     text-align: center;
-    padding: 10px;
+    padding: 3px 10px; /* Réduit l'espace intérieur */
     background-color: #111;
     color: white;
-    font-size: 14px;
+    font-size: 12px; /* Réduit la taille du texte */
+    line-height: 1.2; /* Diminue l'espacement entre les lignes */
 }
 
 .footer nav a {
     color: #4CAF50;
     text-decoration: none;
-    margin: 0 10px;
+    margin: 0 5px; /* Réduit l'espace entre les liens */
+    font-size: 11px; /* Diminue légèrement la taille des liens */
 }
 
 .footer nav a:hover {
