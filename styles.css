@@ -473,3 +473,21 @@ body {
         }
         .success { background-color: #d4edda; color: #155724; }
         .error { background-color: #f8d7da; color: #721c24; }
+
+.footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #111;
+    color: white;
+    font-size: 14px;
+}
+
+.footer nav a {
+    color: #4CAF50;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer nav a:hover {
+    text-decoration: underline;
+}
